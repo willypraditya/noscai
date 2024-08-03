@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
@@ -37,6 +38,7 @@
     "tailwindcss": "^3.4.7",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
+    "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.0.5"
   }
 }
