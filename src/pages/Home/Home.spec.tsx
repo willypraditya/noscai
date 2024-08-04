@@ -6,6 +6,6 @@ describe('Home', () => {
   it('should render the title', () => {
     render(<Home />);
 
-    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('NOSCAI')).toBeInTheDocument();
   });
 });
