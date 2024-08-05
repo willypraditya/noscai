@@ -6,11 +6,14 @@ import {
 import { useDebounce } from 'use-debounce';
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Spinner from '../Spinner/Spinner';
 import { TableProps } from './types';
 
 const Table = <T extends object>({ data, columns }: TableProps<T>) => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [filteredData, setFilteredData] = useState<T[]>(data);
@@ -48,7 +51,7 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
 
   return (
     <div className="overflow-x-auto">
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between">
         <input
           type="text"
           placeholder="Search..."
@@ -56,6 +59,15 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
           onChange={(e) => setSearch(e.target.value)}
           className="rounded border border-gray-300 p-2"
         />
+
+        <div>
+          <button
+            className="rounded-xl bg-blue-600 p-3 text-white hover:bg-blue-700"
+            onClick={() => navigate('create')}
+          >
+            Create New Anamthesis Form
+          </button>
+        </div>
       </div>
 
       <div className="relative">
@@ -67,13 +79,13 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
 
         <table className="min-w-full table-auto border-collapse overflow-hidden rounded-lg">
           {/* Header */}
-          <thead className="bg-gray-200">
+          <thead className="bg-blue-600">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header, index) => (
                   <th
                     key={header.id}
-                    className={`border-b px-4 py-2 text-left font-semibold text-gray-700 ${
+                    className={`border-b px-4 py-2 text-left font-semibold text-white ${
                       index === 0 ? 'rounded-tl-lg' : ''
                     } ${index === headerGroup.headers.length - 1 ? 'rounded-tr-lg' : ''}`}
                   >
@@ -94,7 +106,7 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
             {table.getRowModel().rows.map((row, rowIndex) => (
               <tr
                 key={row.id}
-                className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
+                className={rowIndex % 2 === 0 ? 'bg-white' : 'bg-blue-100'}
               >
                 {row.getVisibleCells().map((cell, cellIndex) => (
                   <td
