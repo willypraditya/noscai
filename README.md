@@ -34,3 +34,13 @@
 └── utils
     Reusable helper functions
 ```
+
+#### Difficulties Found
+- First time using react-table, followed tutorial to implement it
+- First time using dnd-kit, followed this video to implement it (https://www.youtube.com/watch?v=RG-3R6Pu_Ik)
+
+#### Improvement Notes
+- Use MSW for mocking the networks (https://mswjs.io/)
+- More Unit test
+- E2E testings
+- dnd-kit components (AnamnesisContainer and AnamnesisItem) should be re-usable for other possible dnd-kit usage (Possible component name: DndContainer and DndItem)
