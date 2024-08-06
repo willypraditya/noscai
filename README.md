@@ -37,6 +37,7 @@
 
 #### Notes
 - The data will be reset when users refresh the page.
+- Total time spent on the project: 8-10 hours
 
 #### Difficulties Found
 - First time using react-table, followed tutorial to implement it
