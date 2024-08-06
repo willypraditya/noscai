@@ -10,7 +10,12 @@
 
 #### Deployment URL
 ```
+https://noscai.vercel.app/
+```
 
+#### Sample Usage Video URL
+```
+https://www.loom.com/share/63062b043e674803b476ebffff3f0381
 ```
 
 #### How to run
