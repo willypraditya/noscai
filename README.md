@@ -21,6 +21,9 @@ https://www.loom.com/share/63062b043e674803b476ebffff3f0381
 #### How to run
     $ npm install
     $ npm run dev
+    $ or
+    $ yarn
+    $ yarn dev
 
 #### Folder Structure
 ```
