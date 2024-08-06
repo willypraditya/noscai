@@ -81,7 +81,7 @@ const Anamnesis: React.FC<AnamnesisProps> = ({
             className="rounded-xl bg-blue-600 p-4 text-white hover:bg-blue-700"
             onClick={saveAnamnesisForm}
           >
-            Save Anamnesis Form
+            {isEdit ? 'Save' : 'Create'} Anamnesis Form
           </button>
         </div>
       )}

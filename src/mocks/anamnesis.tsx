@@ -1,4 +1,4 @@
-import { FormFieldType } from '@/pages/Anamnesis/types';
+import { FormFieldType } from '@/pages/CreateAnamnesis/types';
 
 import generateId from '@/utils/generateId';
 

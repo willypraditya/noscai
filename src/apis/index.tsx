@@ -1,4 +1,4 @@
-import { Id } from '@/pages/Anamnesis/types';
+import { Id } from '@/pages/CreateAnamnesis/types';
 
 import AnamnesisForm from '@/types/AnamnesisForm';
 
@@ -25,17 +25,23 @@ export const updateAnamnesis = (
 ): string => {
   const anamnesisList = getAnamnesisFormList();
 
-  // Find the index of the form to update
   const index = anamnesisList.findIndex((form) => form.id === id);
 
   if (index === -1) {
     return 'Form not found';
   }
 
-  // Update the form with new values
   anamnesisList[index] = { ...anamnesisList[index], ...updatedForm };
 
-  // Save the updated list back to localStorage
   localStorage.setItem('anamnesis', JSON.stringify(anamnesisList));
+  return 'Success';
+};
+
+export const deleteAnamnesis = (id: Id): string => {
+  const anamnesisList = getAnamnesisFormList();
+
+  const filteredList = anamnesisList.filter((form) => form.id !== id);
+
+  localStorage.setItem('anamnesis', JSON.stringify(filteredList));
   return 'Success';
 };

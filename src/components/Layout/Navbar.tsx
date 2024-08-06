@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <div id="navbar">
-      <div className="flex h-[90px] w-screen items-center justify-between gap-7 px-10 shadow-md">
+      <div className="flex h-[60px] w-screen items-center justify-between gap-7 p-4 shadow-md lg:px-10 lg:py-10">
         <div
           className="flex cursor-pointer items-center gap-4"
           onClick={() => navigate('/')}

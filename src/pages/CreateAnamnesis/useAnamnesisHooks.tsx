@@ -8,6 +8,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
+import dayjs from 'dayjs';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -134,7 +135,9 @@ const useAnamnesisHooks = (isView: boolean, isEdit: boolean) => {
     const data = {
       title: anamnesisTitle,
       description: anamnesisDescription,
-      creationDate: anamnesisCreationDate,
+      creationDate: isEdit
+        ? anamnesisCreationDate
+        : dayjs().format('YYYY-MM-DD'),
       containers,
       forms,
     };

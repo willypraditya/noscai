@@ -10,7 +10,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div>
       <Navbar />
-      <div className="p-10">{children}</div>
+      <div className="p-4 lg:p-10">{children}</div>
     </div>
   );
 };

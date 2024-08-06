@@ -1,4 +1,3 @@
-// src/components/Table/columns.ts
 import { EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
@@ -7,7 +6,12 @@ import { NavigateFunction } from 'react-router-dom';
 
 import AnamnesisForm from '@/types/AnamnesisForm';
 
-const columns = (navigate: NavigateFunction): ColumnDef<AnamnesisForm>[] => {
+import { Id } from '../CreateAnamnesis/types';
+
+const columns = (
+  navigate: NavigateFunction,
+  handleDeleteAnamnesis: (id: Id) => void,
+): ColumnDef<AnamnesisForm>[] => {
   return [
     {
       accessorKey: 'title',
@@ -41,7 +45,7 @@ const columns = (navigate: NavigateFunction): ColumnDef<AnamnesisForm>[] => {
             <button onClick={() => navigate(`/edit/${id}`)}>
               <PencilIcon className="size-5" />
             </button>
-            <button>
+            <button onClick={() => handleDeleteAnamnesis(id)}>
               <TrashIcon className="size-5" />
             </button>
           </div>

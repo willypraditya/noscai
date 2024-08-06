@@ -51,7 +51,7 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
 
   return (
     <div className="overflow-x-auto">
-      <div className="mb-4 flex justify-between">
+      <div className="mb-4 flex flex-col-reverse justify-between gap-4 lg:flex-row">
         <input
           type="text"
           placeholder="Search..."
@@ -62,7 +62,7 @@ const Table = <T extends object>({ data, columns }: TableProps<T>) => {
 
         <div>
           <button
-            className="rounded-xl bg-blue-600 p-3 text-white hover:bg-blue-700"
+            className="w-full rounded-xl bg-blue-600 p-3 text-white hover:bg-blue-700 lg:w-auto"
             onClick={() => navigate('create')}
           >
             Create New Anamthesis Form
