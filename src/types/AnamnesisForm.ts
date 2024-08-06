@@ -1,4 +1,4 @@
-import { ContainerType, FormType, Id } from '@/pages/CreateAnamnesis/types';
+import { ContainerType, FormType, Id } from '@/pages/Anamnesis/types';
 
 interface AnamnesisForm {
   id: Id;

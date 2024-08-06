@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import AnamnesisForm from '@/types/AnamnesisForm';
 
-import { Id } from '../CreateAnamnesis/types';
+import { Id } from '../Anamnesis/types';
 
 const useHomeHooks = () => {
   const [data, setData] = useState<AnamnesisForm[] | undefined>();

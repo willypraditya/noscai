@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Anamnesis from '@/pages/CreateAnamnesis/Anamnesis';
+import Anamnesis from '@/pages/Anamnesis/Anamnesis';
 import Home from '@/pages/Home/Home';
 
 const router = createBrowserRouter([

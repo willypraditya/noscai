@@ -6,7 +6,7 @@ import { NavigateFunction } from 'react-router-dom';
 
 import AnamnesisForm from '@/types/AnamnesisForm';
 
-import { Id } from '../CreateAnamnesis/types';
+import { Id } from '../Anamnesis/types';
 
 const columns = (
   navigate: NavigateFunction,

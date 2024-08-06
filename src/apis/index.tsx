@@ -1,4 +1,4 @@
-import { Id } from '@/pages/CreateAnamnesis/types';
+import { Id } from '@/pages/Anamnesis/types';
 
 import AnamnesisForm from '@/types/AnamnesisForm';
 
