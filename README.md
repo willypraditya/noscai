@@ -35,6 +35,9 @@
     Reusable helper functions
 ```
 
+#### Notes
+- The data will be reset when users refresh the page.
+
 #### Difficulties Found
 - First time using react-table, followed tutorial to implement it
 - First time using dnd-kit, followed this video to implement it (https://www.youtube.com/watch?v=RG-3R6Pu_Ik)
