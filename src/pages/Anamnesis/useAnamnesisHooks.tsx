@@ -1,3 +1,4 @@
+import { createAnamnesis, getAnamnesisById, updateAnamnesis } from '@/apis';
 import {
   DragEndEvent,
   DragOverEvent,
@@ -8,11 +9,22 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import generateId from '@/utils/generateId';
 
 import { ContainerType, FormFieldType, FormType, Id } from './types';
 
-const useCreateAnamnesisHooks = () => {
+const useAnamnesisHooks = (isView: boolean, isEdit: boolean) => {
+  const params = useParams();
+
+  const navigate = useNavigate();
+
+  const [anamnesisTitle, setAnamnesisTitle] = useState('');
+  const [anamnesisDescription, setAnamnesisDescription] = useState('');
+  const [anamnesisCreationDate, setAnamnesisCreationDate] = useState('');
+
   const [containers, setContainers] = useState<ContainerType[]>([
     { id: 1, title: 'Container 1' },
   ]);
@@ -28,10 +40,24 @@ const useCreateAnamnesisHooks = () => {
   const formsIds = useMemo(() => forms.map((form) => form.id), [forms]);
   const [activeForm, setActiveForm] = useState<FormType | null>(null);
 
+  useEffect(() => {
+    if ((isView || isEdit) && params.id) {
+      const anamnesis = getAnamnesisById(params.id);
+
+      setAnamnesisTitle(anamnesis?.title || '');
+      setAnamnesisDescription(anamnesis?.description || '');
+      setAnamnesisCreationDate(anamnesis?.creationDate || '');
+
+      setContainers(anamnesis?.containers || []);
+
+      setForms(anamnesis?.forms || []);
+    }
+  }, [isView, isEdit, params]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
+        distance: 10,
       },
     }),
   );
@@ -39,7 +65,7 @@ const useCreateAnamnesisHooks = () => {
   // Create
   const createNewContainer = () => {
     const newColumn: ContainerType = {
-      id: Math.random(),
+      id: generateId(),
       title: `Container ${containers.length + 1}`,
     };
 
@@ -75,7 +101,7 @@ const useCreateAnamnesisHooks = () => {
     choices?: string[],
   ) => {
     const newForm: FormType = {
-      id: Math.random(),
+      id: generateId(),
       containerId,
       label,
       type,
@@ -102,6 +128,27 @@ const useCreateAnamnesisHooks = () => {
   const deleteForm = (formId: Id) => {
     const filteredForms = forms.filter((item) => item.id !== formId);
     setForms(filteredForms);
+  };
+
+  const saveAnamnesisForm = async () => {
+    const data = {
+      title: anamnesisTitle,
+      description: anamnesisDescription,
+      creationDate: anamnesisCreationDate,
+      containers,
+      forms,
+    };
+
+    if (isEdit && params.id) {
+      await updateAnamnesis(params.id, data);
+    } else {
+      await createAnamnesis({
+        id: generateId(),
+        ...data,
+      });
+    }
+
+    navigate('/');
   };
 
   // Drag and Drop Functions
@@ -183,6 +230,10 @@ const useCreateAnamnesisHooks = () => {
   };
 
   return {
+    anamnesisTitle,
+    setAnamnesisTitle,
+    anamnesisDescription,
+    setAnamnesisDescription,
     containers,
     containersIds,
     activeContainer,
@@ -196,10 +247,11 @@ const useCreateAnamnesisHooks = () => {
     addForm,
     updateForm,
     deleteForm,
+    saveAnamnesisForm,
     onDragStart,
     onDragEnd,
     onDragOver,
   };
 };
 
-export default useCreateAnamnesisHooks;
+export default useAnamnesisHooks;

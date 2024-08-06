@@ -8,6 +8,7 @@ import { FormFieldType, FormType, Id } from '../../types';
 import FormModal from '../FormModal/FormModal';
 
 interface AnamnesisItemProps {
+  isView: boolean;
   form: FormType;
   updateForm: (
     formId: Id,
@@ -19,6 +20,7 @@ interface AnamnesisItemProps {
 }
 
 const AnamnesisItem = ({
+  isView,
   form,
   updateForm,
   deleteForm,
@@ -47,6 +49,7 @@ const AnamnesisItem = ({
       type: 'Form',
       form,
     },
+    disabled: isView,
   });
 
   const style = {
@@ -59,6 +62,8 @@ const AnamnesisItem = ({
       <div
         ref={setNodeRef}
         style={style}
+        {...attributes}
+        {...listeners}
         className="flex min-h-[100px] w-full cursor-grab items-start justify-between rounded bg-blue-400 p-4 opacity-40"
       />
     );
@@ -111,20 +116,22 @@ const AnamnesisItem = ({
         style={style}
         {...attributes}
         {...listeners}
-        className="flex w-full cursor-grab items-start justify-between rounded bg-blue-600 p-4"
+        className="flex min-h-[100px] w-full cursor-grab items-start justify-between rounded bg-blue-600 p-4"
       >
         <div className="flex w-full flex-col gap-2">
           <div className="flex w-full justify-between">
             <div className="font-semibold text-white">{form.label}</div>
-            <div className="flex items-center gap-4">
-              <button onClick={() => setIsEditFormModalOpen(true)}>
-                <PencilIcon className="size-5 text-white" />
-              </button>
+            {!isView && (
+              <div className="flex items-center gap-4">
+                <button onClick={() => setIsEditFormModalOpen(true)}>
+                  <PencilIcon className="size-5 text-white" />
+                </button>
 
-              <button onClick={() => deleteForm(form.id)}>
-                <TrashIcon className="size-5 text-white" />
-              </button>
-            </div>
+                <button onClick={() => deleteForm(form.id)}>
+                  <TrashIcon className="size-5 text-white" />
+                </button>
+              </div>
+            )}
           </div>
 
           <div>{renderFormInput()}</div>

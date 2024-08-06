@@ -10,6 +10,7 @@ import AnamnesisItem from '../AnamnesisItem/AnamnesisItem';
 import FormModal from '../FormModal/FormModal';
 
 interface AnamnesisContainerProps {
+  isView: boolean;
   container: ContainerType;
   updateContainer: (id: Id, title: string) => void;
   deleteContainer: (id: Id) => void;
@@ -31,6 +32,7 @@ interface AnamnesisContainerProps {
 }
 
 const AnamnesisContainer = ({
+  isView,
   container,
   updateContainer,
   deleteContainer,
@@ -40,7 +42,7 @@ const AnamnesisContainer = ({
   updateForm,
   deleteForm,
 }: AnamnesisContainerProps) => {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditContainerMode, setIsEditContainerMode] = useState(false);
 
   const [isAddFormModalOpen, setIsAddFormModalOpen] = useState(false);
 
@@ -66,7 +68,7 @@ const AnamnesisContainer = ({
       type: 'Container',
       container,
     },
-    disabled: isEditMode,
+    disabled: isEditContainerMode || isView,
   });
 
   const style = {
@@ -79,6 +81,8 @@ const AnamnesisContainer = ({
       <div
         ref={setNodeRef}
         style={style}
+        {...attributes}
+        {...listeners}
         className="flex min-h-[500px] w-full flex-col rounded bg-blue-200 opacity-40"
       />
     );
@@ -89,53 +93,53 @@ const AnamnesisContainer = ({
       <div
         ref={setNodeRef}
         style={style}
+        {...attributes}
+        {...listeners}
         className="flex min-h-[500px] w-full flex-col rounded bg-blue-200"
       >
         {/* Header */}
-        <div
-          {...attributes}
-          {...listeners}
-          className="flex cursor-grab items-center justify-between rounded bg-blue-600 p-4"
-        >
+        <div className="flex cursor-grab items-center justify-between rounded bg-blue-600 p-4">
           {/* Title */}
           <div
             className={clsx('text-md cursor-text', {
-              'text-white': !isEditMode,
+              'text-white': !isEditContainerMode,
             })}
-            onClick={() => setIsEditMode(true)}
+            onClick={() => !isView && setIsEditContainerMode(true)}
           >
-            {!isEditMode ? (
+            {!isEditContainerMode ? (
               container.title
             ) : (
               <input
                 autoFocus
                 value={container.title}
-                onBlur={() => setIsEditMode(false)}
+                onBlur={() => setIsEditContainerMode(false)}
                 onChange={(e) => updateContainer(container.id, e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key !== 'Enter') return;
 
-                  setIsEditMode(false);
+                  setIsEditContainerMode(false);
                 }}
               />
             )}
           </div>
 
-          {/* Delete */}
-          <div className="flex gap-4">
-            <div
-              className="cursor-pointer"
-              onClick={() => setIsAddFormModalOpen(true)}
-            >
-              <PlusCircleIcon className="size-5 text-white" />
+          {/* Actions */}
+          {!isView && (
+            <div className="flex gap-4">
+              <div
+                className="cursor-pointer"
+                onClick={() => setIsAddFormModalOpen(true)}
+              >
+                <PlusCircleIcon className="size-5 text-white" />
+              </div>
+              <div
+                className="cursor-pointer"
+                onClick={() => deleteContainer(container.id)}
+              >
+                <TrashIcon className="size-5 text-white" />
+              </div>
             </div>
-            <div
-              className="cursor-pointer"
-              onClick={() => deleteContainer(container.id)}
-            >
-              <TrashIcon className="size-5 text-white" />
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Content */}
@@ -143,6 +147,7 @@ const AnamnesisContainer = ({
           <SortableContext items={formsIds}>
             {forms.map((form) => (
               <AnamnesisItem
+                isView={isView}
                 key={form.id}
                 form={form}
                 updateForm={updateForm}

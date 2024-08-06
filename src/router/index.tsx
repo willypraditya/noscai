@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import CreateAnamnesis from '@/pages/CreateAnamnesis/CreateAnamnesis';
+import Anamnesis from '@/pages/Anamnesis/Anamnesis';
 import Home from '@/pages/Home/Home';
 
 const router = createBrowserRouter([
@@ -10,7 +10,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/create',
-    element: <CreateAnamnesis />,
+    element: <Anamnesis />,
+  },
+  {
+    path: '/view/:id',
+    element: <Anamnesis isView={true} />,
+  },
+  {
+    path: '/edit/:id',
+    element: <Anamnesis isEdit={true} />,
   },
 ]);
 

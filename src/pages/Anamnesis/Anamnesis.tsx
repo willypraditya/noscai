@@ -7,10 +7,22 @@ import Layout from '@/components/Layout/Layout';
 
 import AnamnesisContainer from './components/AnamnesisContainer/AnamnesisContainer';
 import AnamnesisItem from './components/AnamnesisItem/AnamnesisItem';
-import useCreateAnamnesisHooks from './useCreateAnamnesisHooks';
+import useAnamnesisHooks from './useAnamnesisHooks';
 
-const CreateAnamnesis: React.FC = () => {
+interface AnamnesisProps {
+  isView?: boolean;
+  isEdit?: boolean;
+}
+
+const Anamnesis: React.FC<AnamnesisProps> = ({
+  isView = false,
+  isEdit = false,
+}) => {
   const {
+    anamnesisTitle,
+    setAnamnesisTitle,
+    anamnesisDescription,
+    setAnamnesisDescription,
     containers,
     containersIds,
     activeContainer,
@@ -24,19 +36,55 @@ const CreateAnamnesis: React.FC = () => {
     addForm,
     updateForm,
     deleteForm,
+    saveAnamnesisForm,
     onDragStart,
     onDragEnd,
     onDragOver,
-  } = useCreateAnamnesisHooks();
+  } = useAnamnesisHooks(isView, isEdit);
 
   return (
     <Layout>
-      <button
-        className="rounded-xl bg-blue-600 p-4 text-white hover:bg-blue-700"
-        onClick={createNewContainer}
-      >
-        Add New Form Container
-      </button>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
+          <label>Anamnesis Title</label>
+          <input
+            value={anamnesisTitle}
+            onChange={(e) => setAnamnesisTitle(e.target.value)}
+            className="rounded-md border-2 border-solid p-2"
+            placeholder="Enter anamnesis title"
+            disabled={isView}
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label>Anamnesis Descriptions</label>
+          <input
+            value={anamnesisDescription}
+            onChange={(e) => setAnamnesisDescription(e.target.value)}
+            className="rounded-md border-2 border-solid p-2"
+            placeholder="Enter anamnesis description"
+            disabled={isView}
+          />
+        </div>
+      </div>
+
+      {!isView && (
+        <div className="mt-5 flex items-center justify-between">
+          <button
+            className="rounded-xl bg-blue-600 p-4 text-white hover:bg-blue-700"
+            onClick={createNewContainer}
+          >
+            Add New Form Container
+          </button>
+
+          <button
+            className="rounded-xl bg-blue-600 p-4 text-white hover:bg-blue-700"
+            onClick={saveAnamnesisForm}
+          >
+            Save Anamnesis Form
+          </button>
+        </div>
+      )}
 
       <div className="mt-5">
         <DndContext
@@ -49,6 +97,7 @@ const CreateAnamnesis: React.FC = () => {
             <SortableContext items={containersIds}>
               {containers.map((container) => (
                 <AnamnesisContainer
+                  isView={isView}
                   key={container.id}
                   container={container}
                   updateContainer={updateContainer}
@@ -70,6 +119,7 @@ const CreateAnamnesis: React.FC = () => {
             <DragOverlay>
               {activeContainer && (
                 <AnamnesisContainer
+                  isView={isView}
                   container={activeContainer}
                   updateContainer={updateContainer}
                   deleteContainer={deleteContainer}
@@ -85,6 +135,7 @@ const CreateAnamnesis: React.FC = () => {
 
               {activeForm && (
                 <AnamnesisItem
+                  isView={isView}
                   form={activeForm}
                   updateForm={updateForm}
                   deleteForm={deleteForm}
@@ -99,4 +150,4 @@ const CreateAnamnesis: React.FC = () => {
   );
 };
 
-export default CreateAnamnesis;
+export default Anamnesis;
